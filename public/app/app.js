@@ -1,23 +1,30 @@
 (function(global, document) {
 
-  var socket = io.connect('http://localhost:3344/static');
-  var head = document.getElementsByTagName('head')[0];
-  var counter = 0;
-  var requestStack = {};
+  var button = document.getElementById('call-module-btn');
+  var placeholder = document.getElementById('module-placeholder');
 
-  socket.on('receive:file', function (data) {
-    requestStack[data.index](data);
-  });
+  function injectScript(code) {
+    var script = document.createElement('script');
+    script.innerHTML = code;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
 
-  // --- App
-  var socketStatic = global.socketStatic || {};
+  function injectCSS(code) {
+    var style = document.createElement('style');
+    style.innerHTML = code;
+    document.getElementsByTagName('head')[0].appendChild(style);
+  }
 
-  socketStatic.request = function (filePath, callback) {
-    counter++;
-    requestStack[counter] = callback;
-    socket.emit('request:file', { index: counter, path: filePath });
-  };
+  function requestLoginModule() {
+    global.socketStatic.request('/app/login', injectModule);
+  }
 
-  global.socketStatic = socketStatic;
+  function injectModule(data) {
+    placeholder.innerHTML = data.contents['module.html'];
+    injectScript(data.contents['module.js']);
+    injectCSS(data.contents['module.css']);
+  }
+
+  button.addEventListener('click', requestLoginModule, false);
 
 })(window, document);

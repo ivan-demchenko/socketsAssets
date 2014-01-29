@@ -17,7 +17,6 @@ You'll receive an object like
 }
 ```
 
-
 ## Plans
 * I want to make it able to use some middleware in order to extend it's functionality.
 * I also want to make a proper demo.

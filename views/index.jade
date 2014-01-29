@@ -6,7 +6,9 @@ html(lang="en")
   body
     h1 Test
 
-    button#btn Ask for another module
+    button#call-module-btn Load module
+    div#module-placeholder
 
     script(src="/socket.io/socket.io.js", type="text/javascript")
+    script(src="/app/socketStatic-client.js", type="text/javascript")
     script(src="/app/app.js", type="text/javascript")
