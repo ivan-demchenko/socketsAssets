@@ -44,5 +44,6 @@ Just clone it, run `npm install` and `node app`. After that, go to `localhost:33
 
 ## Plans
 * I want to make it able to use some middleware in order to extend it's functionality.
-* I also want to make a proper demo.
-* and real life test.
+* Implement caching both on client side and server side.
+* Implement special methods for using caching.
+* Add speed comparison test with big number of files
