@@ -29,4 +29,4 @@ app.get('/', function (req, res) {
 
 var server = http.createServer(app).listen(app.get('port'));
 
-require('./socketStatic').init(server, publicDir);
+require('./socketStatic')(server, publicDir);

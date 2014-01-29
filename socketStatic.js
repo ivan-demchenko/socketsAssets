@@ -6,11 +6,6 @@ var io;
 var pubDir = '';
 var isdev = true;
 
-// Function Helpters
-function lg(msg) {
-  if (isdev) console.log('---:: ' + msg);
-}
-
 function getFileContents(filePath) {
   var deferred = Q.defer();
   filePath = path.join(__dirname, pubDir, filePath);
@@ -24,7 +19,7 @@ function getFileContents(filePath) {
   return deferred.promise;
 }
 
-function readBatchFiles(array) {
+function readBunchOfFiles(array) {
   var deferred = Q.defer();
   Q.all(array.map(getFileContents)).then(function(values) {
     var obj = {}
@@ -37,7 +32,6 @@ function readBatchFiles(array) {
 }
 
 function readFilesFromDir(dirPath) {
-  lg('readFilesFromDir: ' + dirPath);
   var deferred = Q.defer();
   var appendFolderName = function(fileName) {
     return dirPath + '/' + fileName;
@@ -73,7 +67,7 @@ function processRequest(data, socket) {
   var type = Object.prototype.toString.call(data.path).slice(8, -1).toLowerCase();
 
   if (type === "array") {
-    Q.when(readBatchFiles(data.path)).then(function (obj) {
+    Q.when(readBunchOfFiles(data.path)).then(function (obj) { 
       return socket.emit('receive:file', {index: data.index, contents: obj});
     });
   } else {
@@ -90,22 +84,16 @@ function processRequest(data, socket) {
       });
     }
   }
-
   return null;
 }
 
-function initialize(server, publicDir) {
+module.exports = function initialize(server, publicDir) {
   pubDir = publicDir;
   io = socket.listen(server);
   io.of('/static')
     .on('connection', function (socket) {
       socket.on('request:file', function (data) {
-        lg('requested: ' + data.path);
         processRequest(data, socket);
       });
     });
 }
-
-module.exports = {
-	init: initialize
-};
