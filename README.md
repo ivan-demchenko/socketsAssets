@@ -2,20 +2,45 @@
 
 Using this you can send assets or any other file via WebSockets. Actually, you can request any file from you `public` folder via WebSocket.
 
-# Why
+## Why
 
-I was inspired by SPDY idea to hold one connection with server for files. It means, that it is possible to save 
-a lot of time and traffic by using single connection.
+I was inspired by SPDY idea to hold one connection with server for files. It means, it is possible to save 
+a lot of time and traffic by using single connection. WebSocket connection.
 
-You also can load a separate file or array of files or even whole directories.
+It is also possible to load a separate file or an array of files or even a whole directory.
 
-You'll receive an object like
+Imageine you have a directory, like this:
+
+```
+...
+public
+  app
+    login
+      module.css
+      module.html
+      module.js
+...
+```
+
+Then, you can load it by doing this:
+
+`socketStatic.request('/app/login', someCallback);`
+
+In your callback you'll receive an object like
+
 ```
 {
-  file.js: "/*some content goed here like this: */ (function(){ ... })",
-  file.css: "/* another file */"
+  module.css: "/* another file */",
+  module.html: "<!-- some html markup -->",
+  module.js: "/*some content goed here like this: */ (function(){ ... })"
 }
 ```
+
+Almost immediately! Isn't great!
+
+## Demo
+
+Just clone it, run `npm install` and `node app`. After that, go to `localhost:3344`
 
 ## Plans
 * I want to make it able to use some middleware in order to extend it's functionality.
