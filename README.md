@@ -32,7 +32,7 @@ In your callback you'll receive an object like
 {
   module.css: "/* another file */",
   module.html: "<!-- some html markup -->",
-  module.js: "/*some content goed here like this: */ (function(){ ... })"
+  module.js: "/*some content goes here like this: */ (function(){ ... })"
 }
 ```
 
