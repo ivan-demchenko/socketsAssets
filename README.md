@@ -9,7 +9,7 @@ a lot of time and traffic by using single connection. WebSocket connection.
 
 It is also possible to load a separate file or an array of files or even a whole directory.
 
-Imageine you have a directory, like this:
+Imagine you have a directory, like this:
 
 ```
 ...
